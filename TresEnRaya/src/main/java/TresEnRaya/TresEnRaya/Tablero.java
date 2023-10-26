@@ -2,12 +2,26 @@ package TresEnRaya.TresEnRaya;
 
 public class Tablero {
 
-	private String[][] casillas = new String[3][3];
+	private String[][] casillas;
 	
-	public boolean moverFicha(int x, int y, String ficha) {
+	public Tablero() {
+		casillas = new String[3][3];
+		reiniciarTablero();
+	}
+	
+	
+	public String[][] getCasillas() {
+		return casillas;
+	}
+	
+
+	public void insertarMovimiento(int x, int y, String ficha) {
+			casillas[x][y] = ficha;
+	}
+	
+	public boolean comprobarCasilla(int x, int y) {
 		
 		if(casillas[x][y].equals("")){
-			casillas[x][y] = ficha;
 			return true;
 		}else {
 			return false;

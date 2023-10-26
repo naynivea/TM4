@@ -21,7 +21,23 @@ public class TableroPartida extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
+	
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_1_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_1_2;
+	private JButton btnNewButton_1_1_1;
+	private JButton btnNewButton_3;
+	private JButton btnNewButton_1_3;
+	private JButton btnNewButton_1_1_2;
+	
+	private JButton btnNewButton_4;
+	
+	private Tablero tablero = new Tablero();
+	private String currentPlayer="";
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -50,47 +66,54 @@ public class TableroPartida extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("");
+		btnNewButton = new JButton("");
 		btnNewButton.setBounds(31, 39, 128, 125);
 		contentPane.add(btnNewButton);
+		btnNewButton.addActionListener(btn0Push);
 		
-		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1 = new JButton("");
 		btnNewButton_1.setBounds(31, 167, 128, 125);
 		contentPane.add(btnNewButton_1);
+		btnNewButton_1.addActionListener(btn1Push);
 		
-		JButton btnNewButton_1_1 = new JButton("");
+		btnNewButton_1_1 = new JButton("");
 		btnNewButton_1_1.setBounds(31, 296, 128, 125);
 		contentPane.add(btnNewButton_1_1);
+		btnNewButton_1_1.addActionListener(btn1_1Push);
 		
-		JButton btnNewButton_2 = new JButton("");
+		btnNewButton_2 = new JButton("");
 		btnNewButton_2.setBounds(163, 39, 128, 125);
 		contentPane.add(btnNewButton_2);
+		btnNewButton_2.addActionListener(btn_2Push);
 		
-		JButton btnNewButton_1_2 = new JButton("");
+		btnNewButton_1_2 = new JButton("");
 		btnNewButton_1_2.setBounds(163, 167, 128, 125);
 		contentPane.add(btnNewButton_1_2);
+		btnNewButton_1_2.addActionListener(btn_1_2Push);
 		
-		JButton btnNewButton_1_1_1 = new JButton("");
+		btnNewButton_1_1_1 = new JButton("");
 		btnNewButton_1_1_1.setBounds(163, 296, 128, 125);
 		contentPane.add(btnNewButton_1_1_1);
+		btnNewButton_1_1_1.addActionListener(btn_1_1_1Push);
 		
-		JButton btnNewButton_3 = new JButton("");
+		btnNewButton_3 = new JButton("");
 		btnNewButton_3.setBounds(296, 39, 128, 125);
 		contentPane.add(btnNewButton_3);
+		btnNewButton_3.addActionListener(btn_3Push);
 		
-		JButton btnNewButton_1_3 = new JButton("");
+		btnNewButton_1_3 = new JButton("");
 		btnNewButton_1_3.setBounds(296, 167, 128, 125);
 		contentPane.add(btnNewButton_1_3);
+		btnNewButton_1_3.addActionListener(btn_1_3Push);
 		
-		JButton btnNewButton_1_1_2 = new JButton("");
+		btnNewButton_1_1_2 = new JButton("");
 		btnNewButton_1_1_2.setBounds(296, 296, 128, 125);
 		contentPane.add(btnNewButton_1_1_2);
+		btnNewButton_1_1_2.addActionListener(btn_1_1_2Push);
 		
-		JButton btnNewButton_4 = new JButton("Nueva Partida");
-		btnNewButton_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnNewButton_4 = new JButton("Nueva Partida");
+		btnNewButton_4.addActionListener(btn_4Push);
+	
 		btnNewButton_4.setBounds(530, 11, 169, 23);
 		contentPane.add(btnNewButton_4);
 		
@@ -141,11 +164,12 @@ public class TableroPartida extends JFrame {
 		contentPane.add(rdbtnNewRadioButton_1);
 	}
 	
-	/*ActionListener btn0Push = new ActionListener() {
+	ActionListener btn0Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(0,0);
+			if(tablero.comprobarCasilla(0,0)) {
+				tablero.insertarMovimiento(0,0,"X");
+				btnNewButton.setText("X");
 			}
 		}
 	};
@@ -153,8 +177,9 @@ public class TableroPartida extends JFrame {
 	ActionListener btn1Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(0,1);
+			if(tablero.comprobarCasilla(0,1)) {
+				tablero.insertarMovimiento(0,1, "X");
+				btnNewButton_1.setText("X");
 			}
 		}
 	};
@@ -162,8 +187,9 @@ public class TableroPartida extends JFrame {
 	ActionListener btn1_1Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebapieza) {
-				tablero.insertarMovimiento(0,2);
+			if(tablero.comprobarCasilla(0,2)) {
+				tablero.insertarMovimiento(0,2, "X");
+				btnNewButton_1_1.setText("X");
 			}
 		}
 	};
@@ -171,8 +197,9 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_2Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(1,0);
+			if(tablero.comprobarCasilla(1,0)) {
+				tablero.insertarMovimiento(1,0, "X");
+				btnNewButton_2.setText("X");
 			}
 		}
 	};
@@ -180,8 +207,9 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_1_2Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(1,1);
+			if(tablero.comprobarCasilla(1,1)) {
+				tablero.insertarMovimiento(1,1, "X");
+				btnNewButton_1_2.setText("X");
 			}
 		}
 	};
@@ -189,8 +217,10 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_1_1_1Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebapieza) {
-				tablero.insertarMovimiento(1,2);
+			if(tablero.comprobarCasilla(1,2)) {
+				tablero.insertarMovimiento(1,2, "X");
+				btnNewButton_1_1_1.setText("X");
+
 			}
 		}
 	};
@@ -198,8 +228,10 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_3Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(2,0);
+			if(tablero.comprobarCasilla(2,0)) {
+				tablero.insertarMovimiento(2,0, "X");
+				btnNewButton_3.setText("X");
+
 			}
 		}
 	};
@@ -207,8 +239,10 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_1_3Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebaCasilla()) {
-				tablero.insertarMovimiento(2,1);
+			if(tablero.comprobarCasilla(2,1)) {
+				tablero.insertarMovimiento(2,1, "X");
+				btnNewButton_1_3.setText("X");
+
 			}
 		}
 	};
@@ -216,9 +250,26 @@ public class TableroPartida extends JFrame {
 	ActionListener btn_1_1_2Push = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
-			if(tablero.compruebapieza) {
-				tablero.insertarMovimiento(2,2);
+			if(tablero.comprobarCasilla(2,2)) {
+				tablero.insertarMovimiento(2,2, "X");
+				btnNewButton_1_1_2.setText("X");
 			}
 		}
-	};*/
+	};
+	
+	ActionListener btn_4Push = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+			tablero.reiniciarTablero();
+			btnNewButton.setText("");
+			btnNewButton_1.setText("");
+			btnNewButton_1_1.setText("");
+			btnNewButton_2.setText("");
+			btnNewButton_1_2.setText("");
+			btnNewButton_1_1_1.setText("");
+			btnNewButton_3.setText("");
+			btnNewButton_1_3.setText("");
+			btnNewButton_1_1_2.setText("");
+		}
+	};
 }
