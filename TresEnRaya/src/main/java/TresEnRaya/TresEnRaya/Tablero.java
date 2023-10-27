@@ -74,6 +74,17 @@ public class Tablero {
 		return found;
 	}
 	
+	public boolean tableroCompleto() {
+	    for (int i = 0; i < 3; i++) {
+	        for (int j = 0; j < 3; j++) {
+	            if (casillas[i][j].isEmpty()) {
+	                return false; // Si una casilla está vacía, el tablero no está completo
+	            }
+	        }
+	    }
+	    return true; // Todas las casillas están ocupadas, el tablero está completo
+	}
+
 	public void reiniciarTablero() {
 		
 		for(int i=0;i<3.;i++) {
