@@ -1,337 +1,168 @@
 package TresEnRaya.TresEnRaya;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.util.ArrayList;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JSplitPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
+import java.util.Random;
 
 public class TableroPartida extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_1_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_1_2;
-	private JButton btnNewButton_1_1_1;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_1_3;
-	private JButton btnNewButton_1_1_2;
-	
-	private JButton btnNewButton_4;
-	
-	private Tablero tablero = new Tablero();
-	private boolean turno_jugador_1 = false;
-	private ArrayList<ArrayList<Integer>> posiciones_jugador_1 = new ArrayList<ArrayList<Integer>>();
-	private ArrayList<ArrayList<Integer>> posiciones_jugador_2 = new ArrayList<ArrayList<Integer>>();
-	private ArrayList<JButton> botones_jugador_1 = new ArrayList<JButton>();
-	private ArrayList<JButton> botones_jugador_2 = new ArrayList<JButton>();
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JTextField textField_1;
+    private JRadioButton rdbtnNewRadioButton;
+    private JRadioButton rdbtnCpu;
+    private JRadioButton rdbtnCpu_1;
+    private JRadioButton rdbtnNewRadioButton_1;
 
-	private final int FICHAS_MAXIMAS = 3;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TableroPartida frame = new TableroPartida();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JButton[] buttons;
+    private Tablero tablero = new Tablero();
+    private String currentPlayer = "X"; // Jugador 1 inicia
 
-	/**
-	 * Create the frame.
-	 */
-	public TableroPartida() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 782, 505);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    TableroPartida frame = new TableroPartida();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		btnNewButton = new JButton("");
-		btnNewButton.setBounds(31, 39, 128, 125);
-		contentPane.add(btnNewButton);
-		btnNewButton.addActionListener(btn0Push);
-		
-		btnNewButton_1 = new JButton("");
-		btnNewButton_1.setBounds(31, 167, 128, 125);
-		contentPane.add(btnNewButton_1);
-		btnNewButton_1.addActionListener(btn1Push);
-		
-		btnNewButton_1_1 = new JButton("");
-		btnNewButton_1_1.setBounds(31, 296, 128, 125);
-		contentPane.add(btnNewButton_1_1);
-		btnNewButton_1_1.addActionListener(btn1_1Push);
-		
-		btnNewButton_2 = new JButton("");
-		btnNewButton_2.setBounds(163, 39, 128, 125);
-		contentPane.add(btnNewButton_2);
-		btnNewButton_2.addActionListener(btn_2Push);
-		
-		btnNewButton_1_2 = new JButton("");
-		btnNewButton_1_2.setBounds(163, 167, 128, 125);
-		contentPane.add(btnNewButton_1_2);
-		btnNewButton_1_2.addActionListener(btn_1_2Push);
-		
-		btnNewButton_1_1_1 = new JButton("");
-		btnNewButton_1_1_1.setBounds(163, 296, 128, 125);
-		contentPane.add(btnNewButton_1_1_1);
-		btnNewButton_1_1_1.addActionListener(btn_1_1_1Push);
-		
-		btnNewButton_3 = new JButton("");
-		btnNewButton_3.setBounds(296, 39, 128, 125);
-		contentPane.add(btnNewButton_3);
-		btnNewButton_3.addActionListener(btn_3Push);
-		
-		btnNewButton_1_3 = new JButton("");
-		btnNewButton_1_3.setBounds(296, 167, 128, 125);
-		contentPane.add(btnNewButton_1_3);
-		btnNewButton_1_3.addActionListener(btn_1_3Push);
-		
-		btnNewButton_1_1_2 = new JButton("");
-		btnNewButton_1_1_2.setBounds(296, 296, 128, 125);
-		contentPane.add(btnNewButton_1_1_2);
-		btnNewButton_1_1_2.addActionListener(btn_1_1_2Push);
-		
-		btnNewButton_4 = new JButton("Nueva Partida");
-		btnNewButton_4.addActionListener(btn_4Push);
-	
-		btnNewButton_4.setBounds(530, 11, 169, 23);
-		contentPane.add(btnNewButton_4);
-		
-		JLabel lblNewLabel = new JLabel("Turno de jugador 1");
-		lblNewLabel.setBounds(468, 60, 199, 14);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Jugador 1");
-		lblNewLabel_1.setBounds(468, 117, 151, 14);
-		contentPane.add(lblNewLabel_1);
-		
-		textField = new JTextField();
-		textField.setBounds(530, 142, 166, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("Nombre");
-		lblNewLabel_1_1.setBounds(468, 142, 151, 14);
-		contentPane.add(lblNewLabel_1_1);
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Humano");
-		rdbtnNewRadioButton.setBounds(468, 181, 109, 23);
-		contentPane.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtnCpu = new JRadioButton("CPU");
-		rdbtnCpu.setBounds(590, 181, 109, 23);
-		contentPane.add(rdbtnCpu);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Jugador 2");
-		lblNewLabel_1_2.setBounds(465, 283, 151, 14);
-		contentPane.add(lblNewLabel_1_2);
-		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Nombre");
-		lblNewLabel_1_1_1.setBounds(465, 308, 151, 14);
-		contentPane.add(lblNewLabel_1_1_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(527, 308, 166, 20);
-		contentPane.add(textField_1);
-		
-		JRadioButton rdbtnCpu_1 = new JRadioButton("CPU");
-		rdbtnCpu_1.setBounds(587, 347, 109, 23);
-		contentPane.add(rdbtnCpu_1);
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Humano");
-		rdbtnNewRadioButton_1.setBounds(465, 347, 109, 23);
-		contentPane.add(rdbtnNewRadioButton_1);
-	}
-	
-	ActionListener btn0Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(0, 0, btnNewButton);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(0,0)) {
-				tablero.insertarMovimiento(0,0,"X");
-				btnNewButton.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn1Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(0, 1, btnNewButton_1);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(0,1)) {
-				tablero.insertarMovimiento(0,1, "X");
-				btnNewButton_1.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn1_1Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(0, 2, btnNewButton_1_1);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(0,2)) {
-				tablero.insertarMovimiento(0,2, "X");
-				btnNewButton_1_1.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn_2Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(1, 0, btnNewButton_2);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(1,0)) {
-				tablero.insertarMovimiento(1,0, "X");
-				btnNewButton_2.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn_1_2Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(1,1, btnNewButton_1_2);
-			comprobarVictoria();
-			/*
-			if(tablero.comprobarCasilla(1,1)) {
-				tablero.insertarMovimiento(1,1, "X");
-				btnNewButton_1_2.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn_1_1_1Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(1,2, btnNewButton_1_1_1);
-			comprobarVictoria();
-			/*
-			if(tablero.comprobarCasilla(1,2)) {
-				tablero.insertarMovimiento(1,2, "X");
-				btnNewButton_1_1_1.setText("X");
+    public TableroPartida() {
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 800, 600);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-			}*/
-		}
-	};
-	
-	ActionListener btn_3Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(2,0, btnNewButton_3);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(2,0)) {
-				tablero.insertarMovimiento(2,0, "X");
-				btnNewButton_3.setText("X");
+        buttons = new JButton[9];
+        int x = 50;
+        int y = 50;
+        for (int i = 0; i < 9; i++) {
+            buttons[i] = new JButton("");
+            buttons[i].setBounds(x, y, 100, 100);
+            contentPane.add(buttons[i]);
+            buttons[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    onButtonClick(e);
+                }
+            });
+            x += 120;
+            if (x > 290) {
+                x = 50;
+                y += 120;
+            }
+        }
 
-			}*/
-		}
-	};
-	
-	ActionListener btn_1_3Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(2,1, btnNewButton_1_3);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(2,1)) {
-				tablero.insertarMovimiento(2,1, "X");
-				btnNewButton_1_3.setText("X");
+        JLabel lblNewLabel = new JLabel("Turno de " + currentPlayer);
+        lblNewLabel.setBounds(450, 50, 200, 14);
+        contentPane.add(lblNewLabel);
 
-			}*/
-		}
-	};
-	
-	ActionListener btn_1_1_2Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			insertar(2,2, btnNewButton_1_1_2);
-			comprobarVictoria();
-			/*if(tablero.comprobarCasilla(2,2)) {
-				tablero.insertarMovimiento(2,2, "X");
-				btnNewButton_1_1_2.setText("X");
-			}*/
-		}
-	};
-	
-	ActionListener btn_4Push = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			
-			tablero.reiniciarTablero();
-			btnNewButton.setText("");
-			btnNewButton_1.setText("");
-			btnNewButton_1_1.setText("");
-			btnNewButton_2.setText("");
-			btnNewButton_1_2.setText("");
-			btnNewButton_1_1_1.setText("");
-			btnNewButton_3.setText("");
-			btnNewButton_1_3.setText("");
-			btnNewButton_1_1_2.setText("");
-			textField.setText("");
-			textField_1.setText("");
-			turno_jugador_1 = true;
-		}
-	};
-	
-	private void insertar(int posx, int posy, JButton button) {
-		if(tablero.comprobarCasilla(posx,posy)) {
-			ArrayList<Integer> posicion = new ArrayList<Integer>();
-			posicion.add(posx);
-			posicion.add(posy);
-			if(turno_jugador_1) {
-				if(posiciones_jugador_1.size()>=FICHAS_MAXIMAS) {
-					tablero.vaciarCasilla(posiciones_jugador_1.get(0).get(0), posiciones_jugador_1.get(0).get(1));
-					posiciones_jugador_1.remove(0);
-					botones_jugador_1.get(0).setText("");
-					botones_jugador_1.remove(0);
-				}
-				posiciones_jugador_1.add(posicion);
-				
-				tablero.insertarMovimiento(posx, posy, "X");
-				button.setText("X");
-				botones_jugador_1.add(button);
-			}
-			else {
-				if(posiciones_jugador_2.size()>=FICHAS_MAXIMAS) {
-					tablero.vaciarCasilla(posiciones_jugador_2.get(0).get(0), posiciones_jugador_2.get(0).get(1));
-					posiciones_jugador_2.remove(0);
-					botones_jugador_2.get(0).setText("");
-					botones_jugador_2.remove(0);
-				}
-				posiciones_jugador_2.add(posicion);
-				
-				tablero.insertarMovimiento(posx, posy, "O");
-				button.setText("O");
-				botones_jugador_2.add(button);
-			}
-			turno_jugador_1 = !turno_jugador_1;
-			//System.out.println(tablero.comprobarTablero());
-		}
-	}
-	
-	private void comprobarVictoria() {
-		if(tablero.comprobarTablero()) {
-			System.out.println("El jugador gana");
-		}
-	}
+        textField = new JTextField();
+        textField.setBounds(530, 150, 166, 20);
+        contentPane.add(textField);
+        textField.setColumns(10);
+
+        textField_1 = new JTextField();
+        textField_1.setColumns(10);
+        textField_1.setBounds(530, 320, 166, 20);
+        contentPane.add(textField_1);
+
+        rdbtnNewRadioButton = new JRadioButton("Humano");
+        rdbtnNewRadioButton.setBounds(470, 180, 109, 23);
+        contentPane.add(rdbtnNewRadioButton);
+
+        rdbtnCpu = new JRadioButton("CPU");
+        rdbtnCpu.setBounds(590, 180, 109, 23);
+        contentPane.add(rdbtnCpu);
+
+        rdbtnNewRadioButton_1 = new JRadioButton("Humano");
+        rdbtnNewRadioButton_1.setBounds(470, 350, 109, 23);
+        contentPane.add(rdbtnNewRadioButton_1);
+
+        rdbtnCpu_1 = new JRadioButton("CPU");
+        rdbtnCpu_1.setBounds(590, 350, 109, 23);
+        contentPane.add(rdbtnCpu_1);
+    }
+
+    private void onButtonClick(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+        if (button.getText().isEmpty()) {
+            button.setText(currentPlayer);
+            int index = -1;
+            for (int i = 0; i < 9; i++) {
+                if (button == buttons[i]) {
+                    index = i;
+                    break;
+                }
+            }
+            int row = index / 3;
+            int col = index % 3;
+            tablero.insertarMovimiento(row, col, currentPlayer);
+
+            if (tablero.comprobarTablero()) {
+                JOptionPane.showMessageDialog(this, "¡Jugador " + currentPlayer + " gana!");
+                resetGame();
+            } else if (tablero.tableroCompleto()) {
+                JOptionPane.showMessageDialog(this, "¡Empate!");
+                resetGame();
+            } else {
+                currentPlayer = (currentPlayer.equals("X")) ? "O" : "X";
+                JLabel lblNewLabel = (JLabel) contentPane.getComponent(8);
+                lblNewLabel.setText("Turno de " + currentPlayer);
+                if (rdbtnCpu.isSelected() && currentPlayer.equals("O")) {
+                    // Turno de la IA
+                    realizarMovimientoIA();
+                }
+            }
+        }
+    }
+
+    private void resetGame() {
+        for (JButton button : buttons) {
+            button.setText("");
+        }
+        tablero.reiniciarTablero();
+        currentPlayer = "X";
+        JLabel lblNewLabel = (JLabel) contentPane.getComponent(8);
+        lblNewLabel.setText("Turno de " + currentPlayer);
+    }
+
+    private void realizarMovimientoIA() {
+        Random random = new Random();
+        int index;
+        do {
+            index = random.nextInt(9);
+        } while (!buttons[index].getText().isEmpty());
+        buttons[index].setText("O");
+
+        int row = index / 3;
+        int col = index % 3;
+        tablero.insertarMovimiento(row, col, "O");
+
+        if (tablero.comprobarTablero()) {
+            JOptionPane.showMessageDialog(this, "¡La IA gana!");
+            resetGame();
+        } else if (tablero.tableroCompleto()) {
+            JOptionPane.showMessageDialog(this, "¡Empate!");
+            resetGame();
+        } else {
+            currentPlayer = "X";
+            JLabel lblNewLabel = (JLabel) contentPane.getComponent(8);
+            lblNewLabel.setText("Turno de " + currentPlayer);
+        }
+    }
 }
