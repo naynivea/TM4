@@ -99,7 +99,7 @@ public class TableroPartida extends JFrame {
     }
 
     private void onButtonClick(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
+        JButton button = (JButton) e.getSource;
         if (button.getText().isEmpty()) {
             button.setText(currentPlayer);
             int index = -1;
@@ -114,10 +114,10 @@ public class TableroPartida extends JFrame {
             tablero.insertarMovimiento(row, col, currentPlayer);
 
             if (tablero.comprobarTablero()) {
-                JOptionPane.showMessageDialog(this, "Jugador " + currentPlayer + " gana!");
+                JOptionPane.showMessageDialog(this, "¡Jugador " + currentPlayer + " gana!");
                 resetGame();
             } else if (tablero.tableroCompleto()) {
-                JOptionPane.showMessageDialog(this, "Empate!");
+                JOptionPane.showMessageDialog(this, "¡Empate!");
                 resetGame();
             } else {
                 currentPlayer = (currentPlayer.equals("X")) ? "O" : "X";
